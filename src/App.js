@@ -17,6 +17,10 @@ class Books extends React.Component {
         }
     }
 
+    setActiveBook = (bookId) => {
+        this.setState({ activeBookId : bookId });
+    }
+
     render() {
         const { books, activeBookId } = this.state;
         return (
@@ -25,7 +29,7 @@ class Books extends React.Component {
                 <div className="bookContainer">
                     {books.map(book => <div key={book.id} className={`book ${activeBookId === book.id ? 'active' : ''}`}>
                         <div>{book.name}</div>
-                        <button>Click</button>
+                        <button onClick = {() => this.setActiveBook(book.id)}>Click</button>
                     </div>)}
                 </div>
 
