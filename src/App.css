@@ -6,7 +6,7 @@
   align-items: center;
   padding: 30px;
 }
-.bookContainer{
+.booksContainer{
   display: flex;
   flex-direction: row;
 }
@@ -22,4 +22,15 @@
 .active {
   background-color: darkkhaki;
   border: 1px solid black
+}
+
+.tasksContainer{
+  padding: 10px;
+  background-color: #e4e4e4;
+}
+
+.task{
+  background-color: lightskyblue;
+  padding: 10px;
+  margin: 0 5px 0 5px;
 }

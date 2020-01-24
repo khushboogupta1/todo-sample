@@ -8,11 +8,20 @@ const BOOKS = [
     { id:3, name: 'Book4'},
 ];
 
+const TASKS = [
+    {id: 0,  name: 'Task 1', belongsToBook: 0},
+    {id: 1,  name: 'Task 2', belongsToBook: 1},
+    {id: 2,  name: 'Task 3', belongsToBook: 1},
+    {id: 3,  name: 'Task 4', belongsToBook: 0},
+    {id: 4,  name: 'Task 5', belongsToBook: 2},
+];
+
 class Books extends React.Component {
     constructor() {
         super();
         this.state = {
             books: BOOKS,
+            tasks: TASKS,
             activeBookId: 0,
         }
     }
@@ -21,16 +30,30 @@ class Books extends React.Component {
         this.setState({ activeBookId : bookId });
     }
 
+    get activeBookTasks() {
+        const { tasks, activeBookId } = this.state;
+        return tasks.filter(task => task.belongsToBook === activeBookId);
+    }
+
     render() {
         const { books, activeBookId } = this.state;
         return (
             <div className="container">
                 <div>Books</div>
-                <div className="bookContainer">
+                <div className="booksContainer">
                     {books.map(book => <div key={book.id} className={`book ${activeBookId === book.id ? 'active' : ''}`}>
                         <div>{book.name}</div>
                         <button onClick = {() => this.setActiveBook(book.id)}>Click</button>
                     </div>)}
+                </div>
+                <div className="tasksContainer">
+                    {this.activeBookTasks.map(task => {
+                        return (
+                            <div className="task">
+                                {task.name}
+                            </div>
+                        )
+                    })}
                 </div>
 
             </div>
