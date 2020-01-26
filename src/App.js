@@ -1,95 +1,83 @@
-import React from 'react';
-import './App.css';
-
-const BOOKS = [
-    { id: 0, name: 'Book1' },
-    { id: 1, name: 'Book2' },
-    { id: 2, name: 'Book3' },
-    { id: 3, name: 'Book4' },
-];
-
-const TASKS = [
-    { id: 0, name: 'Task 1', belongsToBook: 0 },
-    { id: 1, name: 'Task 2', belongsToBook: 1 },
-    { id: 2, name: 'Task 3', belongsToBook: 1 },
-    { id: 3, name: 'Task 4', belongsToBook: 0 },
-    { id: 4, name: 'Task 5', belongsToBook: 2 },
-];
+import React from "react";
+import axios from "axios";
+import { withRouter } from 'react-router-dom';
+import BookDetails from "./components/BookDetails";
+import { BOOKS_URL, TASKS_URL } from "./constants";
+import "./App.css";
 
 class Books extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            inputText : '',
-            books: BOOKS,
-            tasks: TASKS,
-            activeBookId: 0,
-        }
+  constructor() {
+    super();
+    this.state = {
+      inputText: "",
+      books: [],
+      tasks: [],
+      activeBookId: "1"
+    };
+  }
+
+  componentDidMount = async () => {
+    try {
+        const rspBooks = await axios.get(BOOKS_URL);
+        const books = rspBooks.data;
+        const rspTasks = await axios.get(TASKS_URL);
+        const tasks = rspTasks.data;
+        this.setState({ books, tasks });
+    } catch (err) {
+        console.log(err);
     }
+  }
 
-    setActiveBook = (bookId) => {
-        this.setState({ activeBookId: bookId });
-    }
+  setActiveBook = bookId => {
+    this.setState({ activeBookId: bookId });
+  };
 
-    get activeBookTasks() {
-        const { tasks, activeBookId } = this.state;
-        return tasks.filter(task => task.belongsToBook === activeBookId);
-    }
+  get activeBookTasks() {
+    const { tasks, activeBookId } = this.state;
+    return tasks.filter(task => task.belongsTo === activeBookId);
+  }
 
-    handleInputChange = (event) => {
-        const { value } = event.target;
-        //const { tasks, activeBookId } = this.state;   
-        this.setState({inputText : value});
-    }
+  handleInputChange = event => {
+    const { value } = event.target;
+    this.setState({ inputText: value });
+  };
 
-    submitBookTask = () => {
-        const {inputText, tasks, activeBookId} = this.state;
-        const tasks_clone = JSON.parse(JSON.stringify(tasks));
-        const taskObj = {
-            id : tasks_clone.length +1,
-            name : inputText,
-            belongsToBook : activeBookId 
-        }
-        tasks_clone.push(taskObj);
-        this.setState({ tasks:tasks_clone, inputText:'' });
-        console.log('tasks:',this.state.tasks);
-    }
+  submitBookTask = () => {
+    const { inputText, tasks, activeBookId } = this.state;
+    const tasksClone = JSON.parse(JSON.stringify(tasks));
+    const taskObj = {
+      id: tasksClone.length + 1,
+      name: inputText,
+      belongsTo: activeBookId
+    };
+    tasksClone.push(taskObj);
+    this.setState({ tasks: tasksClone, inputText: "" });
+    console.log("tasks:", this.state.tasks);
+  };
 
-    render() {
-        const { books, activeBookId } = this.state;
-        return (
-            <div className="container">
-                <div>Books</div>
-                <div className="booksContainer">
-                    {books.map(book => <div key={book.id} className={`book ${activeBookId === book.id ? 'active' : ''}`}>
-                        <div>{book.name}</div>
-                        <button onClick={() => this.setActiveBook(book.id)}>Click</button>
-                    </div>)}
-                </div>
-                <div className="tasksContainer">
-                    {this.activeBookTasks.map(task => {
-                        return (
-                            <div className="task">
-                                {task.name}
-                            </div>
-                        )
-                    })}
-                </div>
-
-                <input
-                    type="text"
-                    value={this.state.inputText}
-                    onChange={(event) => this.handleInputChange(event)}
-                    className="inputStyle"
-                ></input>
-
-                <button onClick={this.submitBookTask}>
-                    Submit
-                </button>
-
+  render() {
+      console.log(this.props);
+    const { books, activeBookId } = this.state;
+    return (
+      <div className="container">
+        <div>Books</div>
+        <div className="booksContainer">
+          {books.map(book => (
+            <div key={book.id} className={`book ${activeBookId === book.id ? "active" : ""}`}>
+              <div>{book.name}</div>
+              <button onClick={() => this.setActiveBook(book.id)}>Click</button>
             </div>
-        );
-    }
+          ))}
+        </div>
+        <BookDetails
+          activeBookTasks={this.activeBookTasks}
+          inputText={this.state.inputText}
+          handleInputChange={this.handleInputChange}
+          submitBookTask={this.submitBookTask}
+        />
+      </div>
+    );
+  }
 }
 
-export default Books;
+export default withRouter(Books);
