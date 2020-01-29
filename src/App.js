@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { withRouter } from 'react-router-dom';
+import { withRouter, Route, Redirect } from 'react-router-dom';
 import BookDetails from "./components/BookDetails";
 import { BOOKS_URL, TASKS_URL } from "./constants";
 import "./App.css";
 
-class Books extends React.Component {
+class App extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -56,7 +56,7 @@ class Books extends React.Component {
   };
 
   render() {
-      console.log(this.props);
+    console.log(this.props);
     const { books, activeBookId } = this.state;
     return (
       <div className="container">
@@ -66,18 +66,26 @@ class Books extends React.Component {
             <div key={book.id} className={`book ${activeBookId === book.id ? "active" : ""}`}>
               <div>{book.name}</div>
               <button onClick={() => this.setActiveBook(book.id)}>Click</button>
+              <button>Click HERE</button>
+              <Route path="/book-details/:id" exact render= { ({match}) => (
+                  <BookDetails
+                    activeBookTasks={this.activeBookTasks}
+                    inputText={this.state.inputText}
+                    handleInputChange={this.handleInputChange}
+                    submitBookTask={this.submitBookTask}
+                    id = {match.params.id}
+                  />
+              )}/>
+                
+             
+
             </div>
           ))}
         </div>
-        <BookDetails
-          activeBookTasks={this.activeBookTasks}
-          inputText={this.state.inputText}
-          handleInputChange={this.handleInputChange}
-          submitBookTask={this.submitBookTask}
-        />
+        
       </div>
     );
   }
 }
 
-export default withRouter(Books);
+export default withRouter(App);
