@@ -11,7 +11,7 @@ const Main = () => {
         <Route exact path="/">
           <App />
         </Route>
-        {/* <Route path="/book-details/:id" children={ <BookDetailsById /> }> */}
+        <Route path="/book-details" children={ <BookDetailsById /> } />
           
         {/* </Route> */}
       </Switch>
