@@ -1,10 +1,10 @@
 import React from "react";
-import { withRouter } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 
 class BookDetails extends React.Component{
+
     render() {
-      let { id } = this.props.match.params.id;
       return (
         <>
           <div className="tasksContainer">
@@ -27,4 +27,4 @@ class BookDetails extends React.Component{
     
 }
 
-export default withRouter(BookDetails);
+export default BookDetails;

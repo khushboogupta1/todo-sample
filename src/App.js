@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { withRouter, Route, Redirect } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import BookDetails from "./components/BookDetails";
 import { BOOKS_URL, TASKS_URL } from "./constants";
 import "./App.css";
@@ -66,19 +66,11 @@ class App extends React.Component {
             <div key={book.id} className={`book ${activeBookId === book.id ? "active" : ""}`}>
               <div>{book.name}</div>
               <button onClick={() => this.setActiveBook(book.id)}>Click</button>
-              <button>Click HERE</button>
-              <Route path="/book-details/:id" exact render= { ({match}) => (
-                  <BookDetails
-                    activeBookTasks={this.activeBookTasks}
-                    inputText={this.state.inputText}
-                    handleInputChange={this.handleInputChange}
-                    submitBookTask={this.submitBookTask}
-                    id = {match.params.id}
-                  />
-              )}/>
-                
-             
-
+              {/* <Link to = {{
+                  pathname : "/BookDetails",
+                  state : {bookId : book.id} 
+              }} > Goto Book </Link>  */}
+              <Link to = { `/BookDetails/${book.id}` } > Goto Book </Link> 
             </div>
           ))}
         </div>
