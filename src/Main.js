@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import App from './App';
 import BookDetailsById from './containers/BookDetailsById';
 
+
 const Main = () => {
   return (
     <Router>
@@ -10,9 +11,9 @@ const Main = () => {
         <Route exact path="/">
           <App />
         </Route>
-        <Route path="/book-details">
-          <BookDetailsById />
-        </Route>
+        <Route path="/book-details" children={ <BookDetailsById /> } />
+          
+        {/* </Route> */}
       </Switch>
     </Router>
   );
