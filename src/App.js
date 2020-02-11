@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { withRouter, Route, Redirect, Link } from "react-router-dom";
+import { withRouter, Link } from 'react-router-dom';
 import BookDetails from "./components/BookDetails";
 import { BOOKS_URL, TASKS_URL } from "./constants";
 import "./App.css";
@@ -66,25 +66,11 @@ class App extends React.Component {
             <div key={book.id} className={`book ${activeBookId === book.id ? "active" : ""}`}>
               <div>{book.name}</div>
               <button onClick={() => this.setActiveBook(book.id)}>Click</button>
-              {/* this is wrong, Route is not used inside components, 
-              inside component we just use methods for routing - like push, pop, goBack etc 
-              or we can use Link to go to some route.
-              */}
-              <Link
-                to={{
-                  pathname: "/book-details",
-                  state: { bookId: book.id }
-                }}
-              >Goto Book</Link>
-              {/* <Route path="/book-details/:id" exact render= { ({match}) => (
-                  <BookDetails
-                    activeBookTasks={this.activeBookTasks}
-                    inputText={this.state.inputText}
-                    handleInputChange={this.handleInputChange}
-                    submitBookTask={this.submitBookTask}
-                    id = {match.params.id}
-                  />
-              )}/> */}
+              {/* <Link to = {{
+                  pathname : "/BookDetails",
+                  state : {bookId : book.id} 
+              }} > Goto Book </Link>  */}
+              <Link to = { `/BookDetails/${book.id}` } > Goto Book </Link> 
             </div>
           ))}
         </div>
