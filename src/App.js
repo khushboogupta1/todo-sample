@@ -18,15 +18,15 @@ class App extends React.Component {
 
   componentDidMount = async () => {
     try {
-        const rspBooks = await axios.get(BOOKS_URL);
-        const books = rspBooks.data;
-        const rspTasks = await axios.get(TASKS_URL);
-        const tasks = rspTasks.data;
-        this.setState({ books, tasks });
+      const rspBooks = await axios.get(BOOKS_URL);
+      const books = rspBooks.data;
+      const rspTasks = await axios.get(TASKS_URL);
+      const tasks = rspTasks.data;
+      this.setState({ books, tasks });
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
-  }
+  };
 
   setActiveBook = bookId => {
     this.setState({ activeBookId: bookId });
@@ -74,7 +74,6 @@ class App extends React.Component {
             </div>
           ))}
         </div>
-        
       </div>
     );
   }
