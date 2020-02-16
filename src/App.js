@@ -18,9 +18,14 @@ class App extends React.Component {
 
   componentDidMount = async () => {
     try {
-      const rspBooks = await axios.get(BOOKS_URL);
+      const headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      };      
+      const rspBooks = await axios.get(BOOKS_URL, {crossdomain: true} );
+      //rspBooks.default.headers.
       const books = rspBooks.data;
-      const rspTasks = await axios.get(TASKS_URL);
+      const rspTasks = await axios.get(TASKS_URL, {crossdomain: true});
       const tasks = rspTasks.data;
       this.setState({ books, tasks });
     } catch (err) {
@@ -30,6 +35,7 @@ class App extends React.Component {
 
   setActiveBook = bookId => {
     this.setState({ activeBookId: bookId });
+    this.props.history.push(`book-details/${bookId}`);
   };
 
   get activeBookTasks() {
@@ -66,11 +72,12 @@ class App extends React.Component {
             <div key={book.id} className={`book ${activeBookId === book.id ? "active" : ""}`}>
               <div>{book.name}</div>
               <button onClick={() => this.setActiveBook(book.id)}>Click</button>
+
               {/* <Link to = {{
                   pathname : "/BookDetails",
                   state : {bookId : book.id} 
               }} > Goto Book </Link>  */}
-              <Link to = { `/BookDetails/${book.id}` } > Goto Book </Link> 
+              <Link to = { `/book-details/${book.id}` } > Goto Book </Link> 
             </div>
           ))}
         </div>
