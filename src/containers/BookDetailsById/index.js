@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../../constants";
+import { BOOKBYID_URL } from "../../constants";
 import { withRouter } from "react-router-dom";
 
 const BookDetailsById = ({ match }) => {
@@ -9,10 +9,10 @@ const BookDetailsById = ({ match }) => {
   const [book, setBook] = useState(null);
   useEffect(() => {
     async function fetchData() {
-      const url = `${BASE_URL}/books/${bookId}`;
+      const url = `${BOOKBYID_URL}/${bookId}`;
       const rspBook = await axios.get(url);
-      console.log("Book", rspBook);
-      setBook(rspBook.data);
+      console.log("Book fetched", rspBook);
+      setBook(rspBook.data[0]);
     }
     fetchData();
   }, [bookId]);

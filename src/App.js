@@ -18,14 +18,9 @@ class App extends React.Component {
 
   componentDidMount = async () => {
     try {
-      const headers = {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      };      
-      const rspBooks = await axios.get(BOOKS_URL, {crossdomain: true} );
-      //rspBooks.default.headers.
+      const rspBooks = await axios.get(BOOKS_URL );
       const books = rspBooks.data;
-      const rspTasks = await axios.get(TASKS_URL, {crossdomain: true});
+      const rspTasks = await axios.get(TASKS_URL);
       const tasks = rspTasks.data;
       this.setState({ books, tasks });
     } catch (err) {
