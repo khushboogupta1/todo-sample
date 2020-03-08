@@ -62,6 +62,9 @@ class App extends React.Component {
     return (
       <div className="container">
         <div>Books</div>
+        <div> 
+            <Link to = { '/create-book/' } > Create New Book </Link>
+        </div> 
         <div className="booksContainer">
           {books.map(book => (
             <div key={book.id} className={`book ${activeBookId === book.id ? "active" : ""}`}>

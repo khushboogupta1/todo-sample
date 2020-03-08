@@ -4,3 +4,5 @@ export const BASE_URL = 'http://localhost/index.php';
 export const BOOKS_URL = `${BASE_URL}/getBooks`;
 export const BOOKBYID_URL = `${BASE_URL}/getBookById`;
 export const TASKS_URL = `${BASE_URL}/tasks`;
+export const CREATBOOK_URL = `${BASE_URL}/creatBook`;
+export const BOOKTASKS_URL = `${BASE_URL}/getBookTasks`;
