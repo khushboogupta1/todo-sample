@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import App from './App';
 import BookDetailsById from './containers/BookDetailsById';
 import CreatNewBook from './containers/CreateNewBook';
-
+import CreateNewTask from './containers/CreateNewTask';
 
 const Main = () => {
   return (
@@ -13,7 +13,8 @@ const Main = () => {
           <App />
         </Route>
         <Route path="/book-details/:id" children={ <BookDetailsById /> } />
-        <Route path="/create-book/" children={ <CreatNewBook /> }  />       
+        <Route path="/create-book/" children={ <CreatNewBook /> }  />  
+        <Route path="/create-task/:bookId" children={ <CreateNewTask/> } />     
         {/* </Route> */}
       </Switch>
     </Router>

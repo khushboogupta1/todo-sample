@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 import { withRouter, Link } from 'react-router-dom';
 import BookDetails from "./components/BookDetails";
-import { BOOKS_URL, TASKS_URL } from "./constants";
+import { BOOKS_URL, TASKS_URL, DELETEBOOK_URL } from "./constants";
+import { Card, Col, Row, Button } from 'antd';
 import "./App.css";
 
 class App extends React.Component {
@@ -30,8 +31,19 @@ class App extends React.Component {
 
   setActiveBook = bookId => {
     this.setState({ activeBookId: bookId });
-    this.props.history.push(`book-details/${bookId}`);
+    //this.props.history.push(`book-details/${bookId}`);
   };
+
+
+  deleteBook = async (bookId) => {       
+    const url = `${DELETEBOOK_URL}/${bookId}`;
+    const response = await axios.put(url);
+    console.log('after delete books',response);
+    if(response && response.status === 200){
+      this.setState({ books:response.data });
+    }
+  }
+
 
   get activeBookTasks() {
     const { tasks, activeBookId } = this.state;
@@ -59,26 +71,37 @@ class App extends React.Component {
   render() {
     console.log(this.props);
     const { books, activeBookId } = this.state;
+    const site_card_wrapper = { background: '#ececec', padding: '30px' };
     return (
       <div className="container">
         <div>Books</div>
         <div> 
-            <Link to = { '/create-book/' } > Create New Book </Link>
+          <Button type="link"> 
+            <Link to = { '/create-book/' } > Create New Book </Link> 
+          </Button>
         </div> 
-        <div className="booksContainer">
-          {books.map(book => (
-            <div key={book.id} className={`book ${activeBookId === book.id ? "active" : ""}`}>
-              <div>{book.name}</div>
-              <button onClick={() => this.setActiveBook(book.id)}>Click</button>
-
-              {/* <Link to = {{
-                  pathname : "/BookDetails",
-                  state : {bookId : book.id} 
-              }} > Goto Book </Link>  */}
-              <Link to = { `/book-details/${book.id}` } > Goto Book </Link> 
+        
+        {/* <Row style={{ minHeight: "100%",lineHeight:"100%",columnCount:"4" }}> */}
+            <div className= {site_card_wrapper}>
+                <Row gutter={32} > 
+                  { books.map(book => {
+                    return(
+                      <Col span={8} key={book.id} className={`book ${activeBookId === book.id ? "active" : ""}`}>
+                        <Card title={book.name} bordered={true}> 
+                          <div> 
+                              <Button type="primary" onClick={() => this.setActiveBook(book.id)}>Active</Button>
+                              <Button type ="primary" onClick={() => this.deleteBook(book.id)} danger>Delete</Button>
+                          </div>
+                          <Button type="link">
+                            <Link to = { `/book-details/${book.id}` } > Goto Book </Link> 
+                          </Button>
+                        </Card>
+                      </Col>
+                    )
+                  })}
+              </Row>
             </div>
-          ))}
-        </div>
+            
       </div>
     );
   }
