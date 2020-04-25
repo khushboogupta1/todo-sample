@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
 import { CREATETASK_URL } from '../../constants';
-import { Input } from 'antd';
+import { Input, Button } from 'antd';
 
 const CreateNewTask = ({ match }) => { 
     const bookId = match.params.bookId; 
@@ -21,15 +21,14 @@ const CreateNewTask = ({ match }) => {
     }
 
     return(
-        <div className="container"> 
+        <div className="container">     
             <h3> Create New Task </h3>
             <Input
                 type="text"
                 value={taskName}
                 onChange = { event => setTaskName(event.target.value) }
-            > 
-            </Input>
-            <button onClick = { submitTaskName }> Create Task</button>
+            /> 
+            <Button type="primary" onClick = { submitTaskName }> Create Task</Button>
         </div>
     );
 };
