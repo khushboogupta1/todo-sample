@@ -3,7 +3,13 @@ import axios from "axios";
 import { withRouter, Link } from 'react-router-dom';
 import BookDetails from "./components/BookDetails";
 import { BOOKS_URL, TASKS_URL, DELETEBOOK_URL } from "./constants";
-import { Card, Col, Row, Button } from 'antd';
+//import { Card, Col, Row, Button } from 'antd';
+import {
+  Box,
+  Button,
+  Heading,
+  Text
+} from '@primer/components'
 import "./App.css";
 
 class App extends React.Component {
@@ -71,7 +77,7 @@ class App extends React.Component {
   render() {
     console.log(this.props);
     const { books, activeBookId } = this.state;
-    const site_card_wrapper = { background: '#ececec', padding: '30px' };
+    //const site_card_wrapper = { background: '#ececec', padding: '30px' };
     return (
       <div className="container">
         <div>Books</div>
@@ -81,25 +87,29 @@ class App extends React.Component {
           </Button>
         </div> 
         
-        {/* <Row style={{ minHeight: "100%",lineHeight:"100%",columnCount:"4" }}> */}
-            <div className= {site_card_wrapper}>
-                <Row gutter={32} > 
+        {/* <Row style={{ minHeight: "100%",lineHeight:"100%",columnCount:"4" }}> className="gutter-row" */}
+            <div>
+                <div> 
                   { books.map(book => {
                     return(
-                      <Col span={8} key={book.id} className={`book ${activeBookId === book.id ? "active" : ""}`}>
-                        <Card title={book.name} bordered={true}> 
-                          <div> 
-                              <Button type="primary" onClick={() => this.setActiveBook(book.id)}>Active</Button>
-                              <Button type ="primary" onClick={() => this.deleteBook(book.id)} danger>Delete</Button>
-                          </div>
-                          <Button type="link">
-                            <Link to = { `/book-details/${book.id}` } > Goto Book </Link> 
-                          </Button>
-                        </Card>
-                      </Col>
+                      <div key={book.id} className={`book ${activeBookId === book.id ? "active" : "" }`}>
+                          <div > 
+                    <Heading>{book.name}</Heading>
+                            <Button type="primary" onClick={() => this.setActiveBook(book.id)}> 
+                              Active 
+                            </Button>
+                            <Button type ="primary" onClick={() => this.deleteBook(book.id)}>
+                                Delete 
+                            </Button>
+                            <Button type="link">
+                              <Link to = { `/book-details/${book.id}` } > Goto Book </Link> 
+                            </Button>
+                            
+                        </div>
+                      </div>
                     )
                   })}
-              </Row>
+              </div>
             </div>
             
       </div>
