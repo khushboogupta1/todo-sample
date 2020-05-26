@@ -8,7 +8,8 @@ import {
   Box,
   Button,
   Heading,
-  Text
+  Text,
+  SideNav
 } from '@primer/components'
 import "./App.css";
 
@@ -77,44 +78,62 @@ class App extends React.Component {
   render() {
     console.log(this.props);
     const { books, activeBookId } = this.state;
-    //const site_card_wrapper = { background: '#ececec', padding: '30px' };
     return (
       <div className="container">
-        <div>Books</div>
-        <div> 
-          <Button type="link"> 
-            <Link to = { '/create-book/' } > Create New Book </Link> 
-          </Button>
-        </div> 
-        
-        {/* <Row style={{ minHeight: "100%",lineHeight:"100%",columnCount:"4" }}> className="gutter-row" */}
-            <div>
-                <div> 
-                  { books.map(book => {
-                    return(
-                      <div key={book.id} className={`book ${activeBookId === book.id ? "active" : "" }`}>
-                          <div > 
-                    <Heading>{book.name}</Heading>
-                            <Button type="primary" onClick={() => this.setActiveBook(book.id)}> 
-                              Active 
-                            </Button>
-                            <Button type ="primary" onClick={() => this.deleteBook(book.id)}>
-                                Delete 
-                            </Button>
-                            <Button type="link">
-                              <Link to = { `/book-details/${book.id}` } > Goto Book </Link> 
-                            </Button>
-                            
-                        </div>
-                      </div>
-                    )
-                  })}
-              </div>
+          <div className="sidenav">
+            <SideNav bordered maxWidth={360}>  
+              <SideNav.Link href={ '/create-book/' } >
+                <Text>Create New Book</Text>
+              </SideNav.Link>
+              { books.map(book => {
+                  return(
+                    <SideNav.Link href={ `/book-details/${book.id}` } key={book.id}>
+                      <Text>{book.name}</Text>
+                    </SideNav.Link>
+                  )
+                })
+              }
+            </SideNav>
+          </div>
+          <div className="dataContainer">
+            <div className="bookHeading">  
+              <Heading>Books Data</Heading>
             </div>
+
+            {/* <div> 
+              <Button type="link"> 
+                <Link to = { '/create-book/' } > Create New Book </Link> 
+              </Button>
+            </div>  */}
             
+        </div>
       </div>
     );
   }
 }
 
 export default withRouter(App);
+
+
+
+{/* <div> 
+    { books.map(book => {
+      return(
+        <div key={book.id} className={`book ${activeBookId === book.id ? "active" : "" }`}>
+            <div> 
+              <Heading>{book.name}</Heading>
+              <Button type="primary" onClick={() => this.setActiveBook(book.id)}> 
+                Active 
+              </Button>
+              <Button type ="primary" onClick={() => this.deleteBook(book.id)}>
+                  Delete 
+              </Button>
+              <Button type="link">
+                <Link to = { `/book-details/${book.id}` } > Goto Book </Link> 
+              </Button>
+              
+          </div>
+        </div>
+      )
+    })}
+</div> */}

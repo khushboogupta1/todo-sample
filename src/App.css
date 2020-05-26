@@ -2,9 +2,34 @@
   height: 100%;
   width: 100%;
   display: flex;
+  /* flex-direction: column;
+  align-items: center; */
+  padding: 30px;
+}
+.sidenav{
+  width:25%;
+}
+.kuVuOd{
+  margin: 5px !important;
+}
+.iREZLX{
+  width: auto !important;
+}
+.sc-fznXWL.variant-normal > .iREZLX:hover, .sc-fznXWL.variant-normal > .iREZLX:focus{
+  background-color: gray !important;
+}
+.dataContainer{
+  display:flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
+  padding: 10px;
+  width:100%;
+}
+.bookHeading{
+  align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .booksContainer{
   display: flex;
